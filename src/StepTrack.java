@@ -5,7 +5,7 @@ public class StepTrack {
     int stepsByDay = 10000;
     int monthData[][] = new int[12][30];
 
-String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+    String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
 //или последний метод заменить на это с выводом массива - понял.
 
 
@@ -23,13 +23,13 @@ String[] monthName = {"Январь", "Февраль", "Март", "Апрел�
         }
     }
 
-// количесво шагов по дням
+    // количесво шагов по дням
     public void printMonthSteps(int month) {
         for (int i = 0; i < monthData[month].length; i++) {
             System.out.println((i + 1) + "-ый день: " + monthData[month][i] + ","); // добавил +1 для вывода 1-30 дней
         }
     }
-// Сумма шагов
+    // Сумма шагов
     public int getStepsCount(int userMonth) { // не заметил большой регистр в название месяца, случайно написал =(
         int sumOfSteps = 0;
         for (int i =0; i < monthData[userMonth].length; i++) {
@@ -38,7 +38,7 @@ String[] monthName = {"Январь", "Февраль", "Март", "Апрел�
         }
         return sumOfSteps;
     }
-// максмальные шаги
+    // максмальные шаги
     public int saveMaxStep(int userMonth) { // максимум пройденно шагов
         int maxSteps = 0;
         for (int i = 0; i < monthData[userMonth].length; i++) {
@@ -52,14 +52,14 @@ String[] monthName = {"Январь", "Февраль", "Март", "Апрел�
     // среднее количесво шагов
 
     public double averageOfSteps(int userMonth)  {
-       int saveSteps = getStepsCount(userMonth);
+        int saveSteps = getStepsCount(userMonth);
         double avengerSumSteps = saveSteps / monthData[userMonth].length; //
         return avengerSumSteps;
     }
 
-     // максимальная серия
+    // максимальная серия
     //Сейчас подсчитывается сколько всего дней было шагов больше чем цель,
-     // а надо чтобы было сколько дней подряд шагов больше чем цель
+    // а надо чтобы было сколько дней подряд шагов больше чем цель
     public int bestSeriesSteps(int userMonth)  {
         int seriesSteps = 0;
         int maxSeriesSteps = 0;
@@ -75,7 +75,7 @@ String[] monthName = {"Январь", "Февраль", "Март", "Апрел�
         }
 
         return maxSeriesSteps;
-        }
+    }
 
 
     // Изменене целевых шагов
@@ -93,8 +93,8 @@ String[] monthName = {"Январь", "Февраль", "Март", "Апрел�
         }
     }
 
-////////// ввод количества дней
-   public  int inputAndCheckDay() {
+    ////////// ввод количества дней
+    public  int inputAndCheckDay() {
         while (true) {
             System.out.println("За какой день Вы хотите внести данные: 1-30? ");
             int userDay = scanner.nextInt();
@@ -106,8 +106,8 @@ String[] monthName = {"Январь", "Февраль", "Март", "Апрел�
             }
         }
     }
-// данные по шагам
-   public int inputAndCheckSteps(int month, int day) {
+    // данные по шагам
+    public int inputAndCheckSteps(int month, int day) {
         while (true) {
             System.out.println("Количество пройденных шагов:");
             int userSteps = scanner.nextInt();
@@ -120,12 +120,12 @@ String[] monthName = {"Январь", "Февраль", "Март", "Апрел�
             }
         }
     }
-// привязка шагов
+    // привязка шагов
     public void monthDaySteps(int userMonth, int userDay, int userSteps, String normMonth) {
 
-            monthData[userMonth][userDay] = userSteps;
+        monthData[userMonth][userDay] = userSteps;
         System.out.println(userSteps + " шагов - было записано в " + userDay + "-ый день за " + monthName[userMonth] + "!");
-        }
+    }
 
 
 
@@ -164,4 +164,3 @@ String[] monthName = {"Январь", "Февраль", "Март", "Апрел�
 
 
 }
-
