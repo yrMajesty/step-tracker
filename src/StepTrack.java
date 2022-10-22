@@ -3,14 +3,14 @@ public class StepTrack {
 
     Scanner scanner = new Scanner(System.in);
     int stepsByDay = 10000;
-    int monthData[][] = new int[12][31];
-    int sumOfSteps = 0;
+    int monthData[][] = new int[12][30];
+
+String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+//или последний метод заменить на это с выводом массива - понял.
 
 
-
-
-   ////////////////////////////////
-    int userMonth() { //ввод месяца
+    ////////////////////////////////
+    int inputAndCheckMonth() { //ввод месяца
         while (true) {
             System.out.println("Введите данные:");
             System.out.println("За какой месяц Вы хотите внести данные: 0 - Январь, 1 - Февраль, 2 - Март, 3 - Апрель, 4 - Май, 5 - Июнь, 6 - Июль, 7 - Август, 8 - Сентябрь, 9 - Октябрь, 10 - Ноябрь, 11 - Декабрь?");
@@ -24,15 +24,15 @@ public class StepTrack {
     }
 
 // количесво шагов по дням
-    public void stepsNumber(int month) {
-        for (int i = 1; i < monthData[month].length; i++) {
-            System.out.println((i) + "-ый день: " + monthData[month][i] + ",");
+    public void printMonthSteps(int month) {
+        for (int i = 0; i < monthData[month].length; i++) {
+            System.out.println((i + 1) + "-ый день: " + monthData[month][i] + ","); // добавил +1 для вывода 1-30 дней
         }
     }
 // Сумма шагов
-    public int SumOfSteps(int userMonth) {
-        sumOfSteps = 0;
-        for (int i = 0; i < monthData[userMonth].length; i++) {
+    public int getStepsCount(int userMonth) { // не заметил большой регистр в название месяца, случайно написал =(
+        int sumOfSteps = 0;
+        for (int i =0; i < monthData[userMonth].length; i++) {
             sumOfSteps = sumOfSteps + monthData[userMonth][i];
 
         }
@@ -52,57 +52,29 @@ public class StepTrack {
     // среднее количесво шагов
 
     public double averageOfSteps(int userMonth)  {
-        double avengerSumSteps = sumOfSteps / (monthData[userMonth].length - 1);
+       int saveSteps = getStepsCount(userMonth);
+        double avengerSumSteps = saveSteps / monthData[userMonth].length; //
         return avengerSumSteps;
     }
 
-// максимальная серия
+     // максимальная серия
+    //Сейчас подсчитывается сколько всего дней было шагов больше чем цель,
+     // а надо чтобы было сколько дней подряд шагов больше чем цель
     public int bestSeriesSteps(int userMonth)  {
         int seriesSteps = 0;
         int maxSeriesSteps = 0;
-        for (int i = 1; i < monthData[userMonth].length; i++){
-            if (monthData[userMonth][i] >= stepsByDay){
-                seriesSteps ++;
+        for (int i = 0; i < monthData[userMonth].length; i++){
+            if (monthData[userMonth][i] >= stepsByDay) {
+                seriesSteps++;
+                if (seriesSteps > maxSeriesSteps) {
+                    maxSeriesSteps = seriesSteps;
+                }
+            } else {
+                seriesSteps = 0;
             }
         }
-        if (seriesSteps > maxSeriesSteps) {
-            maxSeriesSteps = seriesSteps;
-            seriesSteps = 0;
-        }
+
         return maxSeriesSteps;
-    }
-
-
-////////// ввод количества дней
-   public  int userDay() {
-        while (true) {
-            System.out.println("За какой день Вы хотите внести данные: 1-30? ");
-            int userDay = scanner.nextInt();
-            if (userDay >= 1 && userDay <= 30) {
-                return userDay;
-            } else {
-                System.out.println("Неверный ввод. Введите число от 1 - 30");
-            }
-        }
-    }
-// данные по шагам
-   public int userSteps(int month, int day, String normMonth) {
-        while (true) {
-            System.out.println("Количество пройденных шагов:");
-            int userSteps = scanner.nextInt();
-            if (userSteps > 0) {
-                System.out.println("Данные внесены!");
-                System.out.println(userSteps + " шагов - было записано в " + day + "-ый день за " + normMonth + "!");
-                return userSteps;
-            } else {
-                System.out.println("Введите положительное, целое число");
-            }
-        }
-    }
-// привязка шагов
-    public void monthDaySteps(int userMonth, int userDay, int userSteps) {
-
-            monthData[userMonth][userDay] = userSteps;
         }
 
 
@@ -121,46 +93,71 @@ public class StepTrack {
         }
     }
 
+////////// ввод количества дней
+   public  int inputAndCheckDay() {
+        while (true) {
+            System.out.println("За какой день Вы хотите внести данные: 1-30? ");
+            int userDay = scanner.nextInt();
+            userDay = userDay - 1;
+            if (userDay >= 0 && userDay < 30) {
+                return userDay ;
+            } else {
+                System.out.println("Неверный ввод. Введите число от 1 - 30");
+            }
+        }
+    }
+// данные по шагам
+   public int inputAndCheckSteps(int month, int day) {
+        while (true) {
+            System.out.println("Количество пройденных шагов:");
+            int userSteps = scanner.nextInt();
+            if (userSteps > 0) {
+                System.out.println("Данные внесены!");
+
+                return userSteps;
+            } else {
+                System.out.println("Введите положительное, целое число");
+            }
+        }
+    }
+// привязка шагов
+    public void monthDaySteps(int userMonth, int userDay, int userSteps, String normMonth) {
+
+            monthData[userMonth][userDay] = userSteps;
+        System.out.println(userSteps + " шагов - было записано в " + userDay + "-ый день за " + monthName[userMonth] + "!");
+        }
 
 
-    public String normMonth(int userMonth) {   //имена месяцев для вывода для красоты
 
-        if (userMonth == 0) {
-            String normMonth = "Январь";
-            return normMonth;
-        } else if (userMonth == 1) {
-            String normMonth = "Февраль";
-            return normMonth;
-        } else if (userMonth == 2) {
-            String normMonth = "Март";
-            return normMonth;
-        } else if (userMonth == 3) {
-            String normMonth = "Апрель";
-            return normMonth;
-        } else if (userMonth == 4) {
-            String normMonth = "Май";
-            return normMonth;
-        } else if (userMonth == 5) {
-            String normMonth = "Июнь";
-            return normMonth;
-        } else if (userMonth == 6) {
-            String normMonth = "Июль";
-            return normMonth;
-        } else if (userMonth == 7) {
-            String normMonth = "Август";
-            return normMonth;
-        } else if (userMonth == 8) {
-            String normMonth = "Сентябрь";
-            return normMonth;
-        } else if (userMonth == 9) {
-            String normMonth = "Окябрь";
-            return normMonth;
-        } else if (userMonth == 10) {
-            String normMonth = "Ноябрь";
-            return normMonth;
-        } else if (userMonth == 11) {
-            String normMonth = "Декабрь";
-            return normMonth;
+
+
+
+    public String getMonthName(int month) {   //имена месяцев для вывода для красоты
+
+        if (month == 0) {
+            return "Январь";
+        } else if (month == 1) {
+            return "Февраль";
+        } else if (month == 2) {
+            return "Март";
+        } else if (month == 3) {
+            return "Апрель";
+        } else if (month == 4) {
+            return "Май";
+        } else if (month == 5) {
+            return "Июнь";
+        } else if (month == 6) {
+            return "Июль";
+        } else if (month == 7) {
+            return "Август";
+        } else if (month== 8) {
+            return "Сентябрь";
+        } else if (month == 9) {
+            return "Окябрь";
+        } else if (month == 10) {
+            return "Ноябрь";
+        } else if (month == 11) {
+            return "Декабрь";
         }
         return null;
     }
